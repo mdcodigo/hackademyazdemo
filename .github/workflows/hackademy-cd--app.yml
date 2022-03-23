@@ -1,0 +1,26 @@
+name: Hackademy-Az-App--CD
+
+on:
+  #  push:
+  #    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  app-deploy:
+    runs-on: windows-latest
+    steps:
+      - name: Repo Checkout
+        uses: actions/checkout@v1
+
+      - name: Az Login
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: Az SQL Dacpac Deploy
+        uses: azure/sql-action@v1
+        with:
+          server-name: "hackademysql0x008.database.windows.net"
+          connection-string: ${{ secrets.AZURE_SQL_CONNECTION_STRING }}
+          #project-file: "./App/PartsUnlimited.Database/PartsUnlimited.Database.sqlproj"
+          dacpac-package: "./App/Deploy/Db/PartsUnlimited.Database.dacpac"
