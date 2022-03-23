@@ -12,3 +12,4 @@ variable "solutions" {
   type    = list(object({ solution_name = string, publisher = string, product = string }))
   default = []
 }
+

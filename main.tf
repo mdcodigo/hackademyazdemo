@@ -106,9 +106,13 @@ module "Appservice" {
   connection_string = [{
     name = "DefaultConnectionString"
     type = "SQLAzure"
+    //value = format("@Microsoft.KeyVault(VaultName=%s;SecretName=cnnstr)", local.kv_name)
     value = format("@Microsoft.KeyVault(SecretUri=https://%s.vault.azure.net/secrets/cnnstr/)", local.kv_name)
   }]
   instrumentation_key = module.LogAnalitycs.app_insights_id
+  //app_insights_name         = "${var.asp_name}app_insights"
+  //application_insights_type = "web"
+  //workspace_id = module.LogAnalitycs.workspace_id
 }
 //////// AppServices ////////
 
@@ -157,88 +161,91 @@ resource "azurerm_key_vault_access_policy" "kv_acc_pol_app2" {
 }
 //////// KeyVault ////////
 
- //// 5 FrontDoor
- module "Frontdoor" {
-   source              = "./modules/FrontDoor"
-   tags                = local.common_tags
-   frontdoorname       = var.frontdoor_name
-   location            = "Global"
-   resource_group_name = "rghackademy"
-   enforcebpcert       = "false"
-   backendpoolname     = "myservers"
-   acceptedprotocols   = ["Http"]
-   patternstomatch     = ["/*"]
-   frontend_endpoint = {
-     name      = var.frontdoor_name
-     host_name = "${var.frontdoor_name}.azurefd.net"
-   }
+//// #5 FrontDoor
+/*
+module "Frontdoor" {
+  source              = "./modules/FrontDoor"
+  tags                = local.common_tags
+  frontdoorname       = var.frontdoor_name
+  location            = "Global"
+  resource_group_name = "rghackademy"
+  enforcebpcert       = "false"
+  backendpoolname     = "myservers"
+  acceptedprotocols   = ["Http"]
+  patternstomatch     = ["/*"]
+  frontend_endpoint = {
+    name      = var.frontdoor_name
+    host_name = "${var.frontdoor_name}.azurefd.net"
+  }
 
-   routing_rule = {
-     rr1 = {
-       name               = var.frontdoor_name
-       frontend_endpoints = [var.frontdoor_name]
-       accepted_protocols = ["Http", "Https"]
-       patterns_to_match  = ["/*"]
-       enabled            = true
-       configuration      = "Forwarding"
-       forwarding_configuration = {
-         backend_pool_name                     = "misservers"
-         cache_enabled                         = false
-         cache_use_dynamic_compression         = false
-         cache_query_parameter_strip_directive = "StripNone"
-         custom_forwarding_path                = ""
-         forwarding_protocol                   = "MatchRequest"
-       }
-       redirect_configuration = {
-         custom_host         = ""
-         redirect_protocol   = "MatchRequest"
-         redirect_type       = "Found"
-         custom_path         = ""
-         custom_query_string = ""
-       }
-     }
-   }
+  routing_rule = {
+    rr1 = {
+      name               = var.frontdoor_name
+      frontend_endpoints = [var.frontdoor_name]
+      accepted_protocols = ["Http", "Https"]
+      patterns_to_match  = ["/*"]
+      enabled            = true
+      configuration      = "Forwarding"
+      forwarding_configuration = {
+        backend_pool_name                     = "misservers"
+        cache_enabled                         = false
+        cache_use_dynamic_compression         = false
+        cache_query_parameter_strip_directive = "StripNone"
+        custom_forwarding_path                = ""
+        forwarding_protocol                   = "MatchRequest"
+      }
+      redirect_configuration = {
+        custom_host         = ""
+        redirect_protocol   = "MatchRequest"
+        redirect_type       = "Found"
+        custom_path         = ""
+        custom_query_string = ""
+      }
+    }
+  }
 
-   ///////////////////////////
-   backend_pool_load_balancing = {
-     lb1 = {
-       name                            = "exampleLoadBalancingSettings1"
-       sample_size                     = 4
-       successful_samples_required     = 2
-       additional_latency_milliseconds = 0
-     }
-   }
-   ///////////////////////////
+  ///////////////////////////
+  backend_pool_load_balancing = {
+    lb1 = {
+      name                            = "exampleLoadBalancingSettings1"
+      sample_size                     = 4
+      successful_samples_required     = 2
+      additional_latency_milliseconds = 0
+    }
+  }
+  ///////////////////////////
 
-   backend_pool_health_probe = {
-     hp1 = {
-       name                = "exampleHealthProbeSetting1"
-       path                = "/"
-       protocol            = "Http"
-       interval_in_seconds = 120
-     }
-   }
-   ////////////////////////////
-   front-door-object-backend-pool = {
-     backend_pool = {
-       bp1 = {
-         name = "misservers"
-         backend = {
-           app1 = {
-             enabled     = true
-             address     = module.Appservice.app_service_default_site_hostname
-             host_header = module.Appservice.app_service_default_site_hostname
-             http_port   = 80
-             https_port  = 443
-             priority    = 1
-             weight      = 50
-           }
-         }
-         load_balancing_name = "exampleLoadBalancingSettings1"
-         health_probe_name   = "exampleHealthProbeSetting1"
+  backend_pool_health_probe = {
+    hp1 = {
+      name                = "exampleHealthProbeSetting1"
+      path                = "/"
+      protocol            = "Http"
+      interval_in_seconds = 120
+    }
+  }
+  ////////////////////////////
+  front-door-object-backend-pool = {
+    backend_pool = {
+      bp1 = {
+        name = "misservers"
+        backend = {
+          app1 = {
+            enabled     = true
+            address     = module.Appservice.app_service_default_site_hostname
+            host_header = module.Appservice.app_service_default_site_hostname
+            http_port   = 80
+            https_port  = 443
+            priority    = 1
+            weight      = 50
+          }
+        }
+        load_balancing_name = "exampleLoadBalancingSettings1"
+        health_probe_name   = "exampleHealthProbeSetting1"
 
-       }
-     }
-   }
- }
- //////////// FrontDoor ////////////
+      }
+    }
+  }
+}
+*/
+//////////// FrontDoor ////////////
+

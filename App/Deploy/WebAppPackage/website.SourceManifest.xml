@@ -1,0 +1,7 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<sitemanifest>
+  <IisApp path="C:\Users\maduva\AppData\Local\Temp\WebSitePublish\hackademywebapp-1490239108\obj\Debug\Package\PackageTmp" />
+  <setAcl path="C:\Users\maduva\AppData\Local\Temp\WebSitePublish\hackademywebapp-1490239108\obj\Debug\Package\PackageTmp" setAclResourceType="Directory" />
+  <setAcl path="C:\Users\maduva\AppData\Local\Temp\WebSitePublish\hackademywebapp-1490239108\obj\Debug\Package\PackageTmp" setAclUser="anonymousAuthenticationUser" setAclResourceType="Directory" />
+  <setAcl path="C:\Users\maduva\AppData\Local\Temp\WebSitePublish\hackademywebapp-1490239108\obj\Debug\Package\PackageTmp\App_Data" setAclResourceType="Directory" setAclAccess="Write" />
+</sitemanifest>
