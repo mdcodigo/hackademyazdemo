@@ -96,7 +96,7 @@ module "Appservice" {
   resource_group_name = azurerm_resource_group.rghackamedy.name
   sku = {
     tier = "Standard"
-    size = "S3"
+    size = "S1"
   }
   site_config = {
     dotnet_framework_version = "v4.0"
@@ -162,7 +162,7 @@ resource "azurerm_key_vault_access_policy" "kv_acc_pol_app2" {
 //////// KeyVault ////////
 
 //// #5 FrontDoor
-/*
+
 module "Frontdoor" {
   source              = "./modules/FrontDoor"
   tags                = local.common_tags
@@ -246,6 +246,6 @@ module "Frontdoor" {
     }
   }
 }
-*/
+
 //////////// FrontDoor ////////////
 
