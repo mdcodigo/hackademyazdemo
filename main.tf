@@ -77,8 +77,8 @@ module "SQLServer" {
     },
     {
       name             = "desktop-ip"
-      start_ip_address = "190.105.33.1"
-      end_ip_address   = "190.105.33.254"
+      start_ip_address = "190.105.53.1"
+      end_ip_address   = "190.105.53.254"
     }
   ]
   tags = local.common_tags
