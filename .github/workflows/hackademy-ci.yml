@@ -38,6 +38,7 @@ jobs:
         
       - name: Terraform Init
         id: init
+        working-directory: "/home/runner/work/hackademyazdemo/hackademyazdemo"
         env:
           ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID  }}
           ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET  }}
@@ -47,4 +48,5 @@ jobs:
 
       - name: Terraform Validate
         id: validate
+        working-directory: "/home/runner/work/hackademyazdemo/hackademyazdemo"
         run: terraform validate -no-color
