@@ -32,12 +32,9 @@ jobs:
         id: fmt
         run: terraform fmt -check
         
-      - name: Repo Check
-        id: ls
-        run: ls
-
       - name: Terraform Init
         id: init
+        working-directory: .
         env:
           ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID  }}
           ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET  }}
