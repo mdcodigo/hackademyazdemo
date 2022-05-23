@@ -39,7 +39,7 @@ resource "azurerm_app_service" "ekoapp" {
     content {
       always_on                = lookup(site_config.value, "always_on", null)
       dotnet_framework_version = lookup(site_config.value, "dotnet_framework_version", null)
-      scm_type                 = lookup(site_config.value, "None", null)
+      #scm_type                 = lookup(site_config.value, "None", null)
     }
   }
 
