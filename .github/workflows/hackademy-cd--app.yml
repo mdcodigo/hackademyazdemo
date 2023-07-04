@@ -8,6 +8,7 @@ on:
 jobs:
   app-deploy:
     runs-on: windows-latest
+    environment: Azure
     steps:
       - name: Repo Checkout
         uses: actions/checkout@v1
